@@ -14,6 +14,7 @@ class Solution {
             return false;
         int len = s.length();
         int[] m1 = new int[256], m2 = new int[256];
+        // 将两个字符串中的每个字符与位置进行映射
         for (int i = 0; i < len; i++) {
             char a = s.charAt(i), b = t.charAt(i);
             if (m1[a] != m2[b])
