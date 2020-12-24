@@ -1,44 +1,40 @@
+import java.util.Map;
+
 /*
  * @lc app=leetcode id=105 lang=java
  *
  * [105] Construct Binary Tree from Preorder and Inorder Traversal
  */
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
-    }
-    
-    public TreeNode build(int[] preorder, int stPre, int edPre, int[] inorder, int stIn, int edIn) {
-        if(preorder.length != inorder.length)
+        if (preorder.length == 0 || preorder.length != inorder.length)
             return null;
-        if(preorder.length == 1 && inorder.length == 1 && preorder[0] != inorder[0])
-            return null;
-        
-        TreeNode root = null;
-        int i = stIn;
-        for (; i <= edIn; ++i) {
-            if (inorder[i] == preorder[stPre]) {
-                root = new TreeNode(inorder[i]);
-                break;
-            }
+        // 使用哈希表预处理中序序列中每个节点值与位置的关系
+        map = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
         }
-        if(root == null)
+        // 传入的后三个参数分别为
+        // 当前子树在中序序列中的起、始位置
+        // 以及根节点在先序序列中的位置
+        return build(preorder, 0, inorder.length - 1, 0);
+    }
+
+    private Map<Integer, Integer> map;
+
+    private TreeNode build(int[] preorder, int stIn, int edIn, int idxPre) {
+        if (stIn > edIn)
             return null;
-        int leftLen = i - stIn, rightLen = edIn - i;
-        if(leftLen > 0)
-            root.left = build(preorder, stPre + 1, stPre + leftLen, inorder, stIn, i - 1);
-        if(rightLen > 0)
-            root.right = build(preorder, stPre + leftLen + 1, edPre, inorder, i + 1, edIn);
+        // 取根节点的值
+        int rootVal = preorder[idxPre];
+        // 取根节点在中序中的位置以及左子树的长度
+        int idxIn = map.get(rootVal), leftLen = idxIn - stIn;
+        TreeNode root = new TreeNode(rootVal);
+        // 递归构建左子树
+        root.left = build(preorder, stIn, idxIn - 1, idxPre + 1);
+        // 递归构建右子树
+        root.right = build(preorder, idxIn + 1, edIn, idxPre + leftLen + 1);
+
         return root;
     }
 }
-
