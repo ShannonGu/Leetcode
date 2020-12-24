@@ -8,45 +8,46 @@
  * next; ListNode(int x) { val = x; } }
  */
 class Solution {
-    // 递归
-    private ListNode cur;
+    // solution1 递归
+    // private ListNode cur;
 
-    public boolean isPalindrome(ListNode head) {
-        cur = head;
-        return helper(head);
-    }
+    // public boolean isPalindrome(ListNode head) {
+    //     cur = head;
+    //     return helper(head);
+    // }
 
-    private boolean helper(ListNode node) {
-        if (node == null)
-            return true;
-        boolean res = helper(node.next) && (node.val == cur.val);
-        cur = cur.next;
-        return res;
-    }
+    // private boolean helper(ListNode node) {
+    //     if (node == null)
+    //         return true;
+    //     boolean res = helper(node.next) && (node.val == cur.val);
+    //     cur = cur.next;
+    //     return res;
+    // }
 
-    // 使用栈，空间复杂度不为O(1)
-    public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null)
-            return true;
-        ListNode slow = head, fast = head;
-        Stack<Integer> st = new Stack<>();
-        st.push(head.val);
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            st.push(slow.val);
-        }
-        if (fast.next == null)
-            st.pop();
-        while (slow.next != null) {
-            slow = slow.next;
-            int tmp = st.pop();
-            if (tmp != slow.val)
-                return false;
-        }
-        return true;
-    }
+    // solution2 使用栈，空间复杂度不为O(1)
+    // public boolean isPalindrome(ListNode head) {
+    //     if (head == null || head.next == null)
+    //         return true;
+    //     ListNode slow = head, fast = head;
+    //     Stack<Integer> st = new Stack<>();
+    //     st.push(head.val);
+    //     while (fast.next != null && fast.next.next != null) {
+    //         slow = slow.next;
+    //         fast = fast.next.next;
+    //         st.push(slow.val);
+    //     }
+    //     if (fast.next == null)
+    //         st.pop();
+    //     while (slow.next != null) {
+    //         slow = slow.next;
+    //         int tmp = st.pop();
+    //         if (tmp != slow.val)
+    //             return false;
+    //     }
+    //     return true;
+    // }
 
+    // solution3
     public boolean isPalindrome(ListNode head) {
         if (head == null || head.next == null)
             return true;
