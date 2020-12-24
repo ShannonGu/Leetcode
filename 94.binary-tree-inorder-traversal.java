@@ -3,47 +3,39 @@
  *
  * [94] Binary Tree Inorder Traversal
  */
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
-    //Morris遍历
+    // Morris遍历
     // public List<Integer> inorderTraversal(TreeNode root) {
-    //     List<Integer> res = new ArrayList<>();
-    //     TreeNode cur = root, pre = null;
-    //     while (cur != null) {
-    //         if (cur.left == null) {
-    //             res.add(cur.val);
-    //             pre = cur;
-    //             cur = cur.right;
-    //         } else {
-    //             pre = cur.left;
-    //             while (pre.right != null && pre.right != cur)
-    //                 pre = pre.right;
-    //             if (pre.right == null) {
-    //                 pre.right = cur;
-    //                 cur = cur.left;
-    //             } else {
-    //                 pre.right = null;
-    //                 res.add(cur.val);
-    //                 pre = cur;
-    //                 cur = cur.right;
-    //             }
-    //         }
-    //     }
-    //     return res;
+    // List<Integer> res = new ArrayList<>();
+    // TreeNode cur = root, pre = null;
+    // while (cur != null) {
+    // if (cur.left == null) {
+    // res.add(cur.val);
+    // pre = cur;
+    // cur = cur.right;
+    // } else {
+    // pre = cur.left;
+    // while (pre.right != null && pre.right != cur)
+    // pre = pre.right;
+    // if (pre.right == null) {
+    // pre.right = cur;
+    // cur = cur.left;
+    // } else {
+    // pre.right = null;
+    // res.add(cur.val);
+    // pre = cur;
+    // cur = cur.right;
+    // }
+    // }
+    // }
+    // return res;
     // }
 
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> st = new Stack<>();
         TreeNode p = root;
+
         while (!st.isEmpty() || p != null) {
             if (p != null) {
                 st.push(p);
@@ -57,4 +49,3 @@ class Solution {
         return res;
     }
 }
-
