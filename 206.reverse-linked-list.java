@@ -9,31 +9,31 @@
  */
 class Solution {
     // 头插法
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null)
-            return head;
-        ListNode dummy = new ListNode(-1);
-        dummy.next = null;
-        ListNode p = head;
-        while (p != null) {
-            ListNode q = p.next;
-            p.next = dummy.next;
-            dummy.next = p;
-            p = q;
-        }
-        return dummy.next;
-    }
-
     // public ListNode reverseList(ListNode head) {
-    // ListNode prev = null, next = null;
-    // while (head != null) {
-    // next = head.next;
-    // head.next = prev;
-    // prev = head;
-    // head = next;
+    // if(head == null || head.next == null)
+    // return head;
+    // ListNode dummy = new ListNode(-1);
+    // dummy.next = null;
+    // ListNode p = head;
+    // while (p != null) {
+    // ListNode q = p.next;
+    // p.next = dummy.next;
+    // dummy.next = p;
+    // p = q;
     // }
-    // return prev;
+    // return dummy.next;
     // }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null, next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
 
     // 递归
     // public ListNode reverseList(ListNode head) {
