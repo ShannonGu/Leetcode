@@ -5,27 +5,25 @@
  */
 
 // @lc code=start
-/**
- * Definition for a binary tree node. public class TreeNode { int val; TreeNode
- * left; TreeNode right; TreeNode(int x) { val = x; } }
- */
 class Solution {
     // https://www.cnblogs.com/grandyang/p/4298069.html
     // Morris遍历
     public void recoverTree(TreeNode root) {
-        TreeNode first = null, second = null, last = null, pre = null;
-        TreeNode cur = root;
+        // fir指向第一个错误节点，sec指向第二个错误节点
+        // last指向中序遍历的上一个节点
+        TreeNode cur = root, last = null, fir = null, sec = null;
         while (cur != null) {
             if (cur.left == null) {
+                // 中序遍历的上一个节点大于当前节点
                 if (last != null && last.val > cur.val) {
-                    if (first == null)
-                        first = last;
-                    second = cur;
+                    if (fir == null)
+                        fir = last;
+                    sec = cur;
                 }
                 last = cur;
                 cur = cur.right;
             } else {
-                pre = cur.left;
+                TreeNode pre = cur.left;
                 while (pre.right != null && pre.right != cur)
                     pre = pre.right;
                 if (pre.right == null) {
@@ -34,18 +32,18 @@ class Solution {
                 } else {
                     pre.right = null;
                     if (last != null && last.val > cur.val) {
-                        if (first == null)
-                            first = last;
-                        second = cur;
+                        if (fir == null)
+                            fir = last;
+                        sec = cur;
                     }
                     last = cur;
                     cur = cur.right;
                 }
             }
         }
-        int tmp = first.val;
-        first.val = second.val;
-        second.val = tmp;
+        int tmp = fir.val;
+        fir.val = sec.val;
+        sec.val = tmp;
     }
 }
 // @lc code=end
