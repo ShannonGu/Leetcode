@@ -5,18 +5,19 @@
  */
 
 //https://www.cnblogs.com/grandyang/p/4491665.html
- 
 class TrieNode {
     TrieNode[] child;
     boolean isWord;
 
     public TrieNode() {
+        isWord = false;
         child = new TrieNode[26];
     }
 }
 
 class Trie {
     TrieNode root;
+
     /** Initialize your data structure here. */
     public Trie() {
         root = new TrieNode();
@@ -31,7 +32,7 @@ class Trie {
                 p.child[i] = new TrieNode();
             p = p.child[i];
         }
-        //在每个分支终点指示该分支路径所表示的字符串;
+        // 标记该分支存在字符串;
         p.isWord = true;
     }
 
@@ -44,11 +45,13 @@ class Trie {
                 return false;
             p = p.child[i];
         }
-        //表示trie中是否有该word;
+        // 表示trie中是否有该word;
         return p.isWord;
     }
 
-    /** Returns if there is any word in the trie that starts with the given prefix. */
+    /**
+     * Returns if there is any word in the trie that starts with the given prefix.
+     */
     public boolean startsWith(String prefix) {
         TrieNode p = root;
         for (char c : prefix.toCharArray()) {
@@ -61,9 +64,7 @@ class Trie {
     }
 }
 /**
- * Your Trie object will be instantiated and called as such: 
- * Trie obj = new Trie(); 
- * obj.insert(word); 
- * boolean param_2 = obj.search(word); 
- * boolean param_3 = obj.startsWith(prefix);
+ * Your Trie object will be instantiated and called as such: Trie obj = new
+ * Trie(); obj.insert(word); boolean param_2 = obj.search(word); boolean param_3
+ * = obj.startsWith(prefix);
  */
