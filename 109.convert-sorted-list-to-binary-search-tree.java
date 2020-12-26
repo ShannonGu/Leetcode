@@ -3,59 +3,42 @@
  *
  * [109] Convert Sorted List to Binary Search Tree
  */
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
-    //https://www.cnblogs.com/grandyang/p/4295618.html
-    // public TreeNode sortedListToBST(ListNode head) {
-    //     if(head == null)
-    //         return null;
-    //     if(head.next == null)
-    //         return new TreeNode(head.val);
-    //     ListNode slow = head, fast = head, pre = slow;
-    //     while (fast.next != null && fast.next.next != null) {
-    //         pre = slow;
-    //         slow = slow.next;
-    //         fast = fast.next.next;
-    //     }
+    // https://www.cnblogs.com/grandyang/p/4295618.html
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return new TreeNode(head.val);
+        ListNode slow = head, fast = head, pre = slow;
+        while (fast.next != null && fast.next.next != null) {
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
 
-    //     //slow为中间节点,为根节点
-    //     //fast此时指向右子树的第一个节点
-    //     fast = slow.next;
-    //     pre.next = null;
-    //     TreeNode root = new TreeNode(slow.val);
+        // slow为中间节点,为根节点
+        // fast此时指向右子树的第一个节点
+        fast = slow.next;
+        pre.next = null;
+        TreeNode root = new TreeNode(slow.val);
 
-    //     //防止只有两个节点的情况
-    //     //此时head == slow
-    //     if(head != slow)
-    //         root.left = sortedListToBST(head);
-    //     root.right = sortedListToBST(fast);
-    //     return root;
-    // }
+        // 防止只有两个节点的情况
+        // 此时head == slow
+        if (head != slow)
+            root.left = sortedListToBST(head);
+        root.right = sortedListToBST(fast);
+        return root;
+    }
 
     public TreeNode sortedListToBST(ListNode head) {
-        if(head == null)
+        if (head == null)
             return null;
         return helper(head, null);
     }
-    
+
     private TreeNode helper(ListNode head, ListNode tail) {
-        if(head == tail)
+        if (head == tail)
             return null;
         ListNode slow = head, fast = head;
         while (fast.next != tail && fast.next.next != tail) {
@@ -68,4 +51,3 @@ class Solution {
         return root;
     }
 }
-
