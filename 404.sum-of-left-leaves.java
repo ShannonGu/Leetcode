@@ -5,19 +5,26 @@
  */
 
 // @lc code=start
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
+    private int res;
+
     public int sumOfLeftLeaves(TreeNode root) {
-        
+        if (root == null)
+            return 0;
+        res = 0;
+        helper(root.left, true);
+        helper(root.right, false);
+        return res;
+    }
+
+    private void helper(TreeNode node, boolean isLeft) {
+        if (node == null)
+            return;
+        if (isLeft && node.left == null && node.right == null) {
+            res += node.val;
+        }
+        helper(node.left, true);
+        helper(node.right, false);
     }
 }
 // @lc code=end
-
