@@ -6,22 +6,22 @@
 
 // @lc code=start
 class Solution {
-    public int findBottomLeftValue(TreeNode root) {
-        if (root == null)
-            return -1;
-        // 利用堆从右向左遍历
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-        TreeNode node = null;
-        while (!q.isEmpty()) {
-            node = q.poll();
-            if (node.right != null)
-                q.offer(node.right);
-            if (node.left != null)
-                q.offer(node.left);
-        }
-        return node.val;
-    }
+    // public int findBottomLeftValue(TreeNode root) {
+    // if (root == null)
+    // return -1;
+    // // 利用堆从右向左遍历
+    // Queue<TreeNode> q = new LinkedList<>();
+    // q.offer(root);
+    // TreeNode node = null;
+    // while (!q.isEmpty()) {
+    // node = q.poll();
+    // if (node.right != null)
+    // q.offer(node.right);
+    // if (node.left != null)
+    // q.offer(node.left);
+    // }
+    // return node.val;
+    // }
 
     public int findBottomLeftValue(TreeNode root) {
         if (root == null)
@@ -37,6 +37,8 @@ class Solution {
     private void helper(TreeNode root, int depth) {
         if (root == null)
             return;
+        // 先序遍历
+        // 左子树总比右子树先遍历到，于是先更新maxDepth
         if (depth > maxDepth) {
             maxDepth = depth;
             res = root.val;

@@ -31,31 +31,6 @@ class Solution {
     // return res;
     // }
 
-    // public List<Integer> inorderTraversal(TreeNode root) {
-    // if(root == null)
-    // return new ArrayList<>();
-    // List<Integer> res = new ArrayList<>();
-    // Stack<TreeNode> st = new Stack<>();
-    // TreeNode pre = null;
-    // st.push(root);
-    // while (!st.isEmpty()) {
-    // TreeNode cur = st.peek();
-    // if (cur.left != null && pre != cur.left) {
-    // cur = cur.left;
-    // st.push(cur);
-    // } else {
-    // res.add(cur.val);
-    // pre = cur;
-    // st.pop();
-    // if (cur.right != null) {
-    // cur = cur.right;
-    // st.push(cur);
-    // }
-    // }
-    // }
-    // return res;
-    // }
-
     // Morris traversal
     public List<Integer> preorderTraversal(TreeNode root) {
         if (root == null)
