@@ -5,19 +5,20 @@
  */
 
 // @lc code=start
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
+        if (root == null || p == root || q == root)
+            return root;
+        if (p == null)
+            return q;
+        if (q == null)
+            return p;
+        if (p.val < root.val && q.val < root.val)
+            return lowestCommonAncestor(root.left, p, q);
+        else if (p.val > root.val && q.val > root.val)
+            return lowestCommonAncestor(root.right, p, q);
+        // p、q分别位于root左右子树
+        return root;
     }
 }
 // @lc code=end
-
