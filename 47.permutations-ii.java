@@ -7,6 +7,7 @@ import java.util.List;
  */
 class Solution {
     // https://leetcode.com/problems/permutations/discuss/18239/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partioning)
+    // https://www.cnblogs.com/grandyang/p/4359825.html
     private List<List<Integer>> res;
 
     public List<List<Integer>> permuteUnique(int[] nums) {
