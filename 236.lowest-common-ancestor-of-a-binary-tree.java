@@ -45,38 +45,38 @@ class Solution {
     }
 
     // solution 2
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        Stack<TreeNode> st = new Stack<>();
-        // 将每个节点与父节点建立映射
-        Map<TreeNode, TreeNode> parents = new HashMap<>();
-        // root的父节点设为null
-        parents.put(root, null);
-        st.push(root);
-        while (!parents.containsKey(p) || !parents.containsKey(q)) {
-            TreeNode node = st.pop();
-            // 为每个节点与其父节点建立映射
-            if (node.left != null) {
-                parents.put(node.left, node);
-                st.push(node.left);
-            }
-            if (node.right != null) {
-                parents.put(node.right, node);
-                st.push(node.right);
-            }
-        }
+    // public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    // Stack<TreeNode> st = new Stack<>();
+    // // 将每个节点与父节点建立映射
+    // Map<TreeNode, TreeNode> parents = new HashMap<>();
+    // // root的父节点设为null
+    // parents.put(root, null);
+    // st.push(root);
+    // while (!parents.containsKey(p) || !parents.containsKey(q)) {
+    // TreeNode node = st.pop();
+    // // 为每个节点与其父节点建立映射
+    // if (node.left != null) {
+    // parents.put(node.left, node);
+    // st.push(node.left);
+    // }
+    // if (node.right != null) {
+    // parents.put(node.right, node);
+    // st.push(node.right);
+    // }
+    // }
 
-        // 自底向上存储其中一个节点的所有祖先节点
-        Set<TreeNode> ancestors = new HashSet<>();
-        while (p != null) {
-            ancestors.add(p);
-            p = parents.get(p);
-        }
+    // // 自底向上存储其中一个节点的所有祖先节点
+    // Set<TreeNode> ancestors = new HashSet<>();
+    // while (p != null) {
+    // ancestors.add(p);
+    // p = parents.get(p);
+    // }
 
-        // 再次自底向上遍历另一个节点的祖先节点
-        // 寻找p的祖先节点中是否q的祖先节点
-        while (!ancestors.contains(q)) {
-            q = parents.get(q);
-        }
-        return q;
-    }
+    // // 再次自底向上遍历另一个节点的祖先节点
+    // // 寻找p的祖先节点中是否q的祖先节点
+    // while (!ancestors.contains(q)) {
+    // q = parents.get(q);
+    // }
+    // return q;
+    // }
 }
