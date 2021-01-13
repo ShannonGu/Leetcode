@@ -5,149 +5,131 @@
  */
 class LRUCache {
 
-    // 兼具LinkedList和HashMap特性
-    Map<Integer, Integer> map = new LinkedHashMap<>();
-    int limit;
+    // solution1 利用java内置的LinkedHashMap
+    // 在HashMap的每个位置用LinkedList处理冲突元素
+    // 再通过双向链表将所有元素有顺序地串联起来
+    // Map<Integer, Integer> map = new LinkedHashMap<>();
+    // int limit;
 
-    public LRUCache(int capacity) {
-        limit = capacity;
-    }
-
-    public int get(int key) {
-        if (!map.containsKey(key))
-            return -1;
-        int val = map.get(key);
-        //链表头部存放的是最久访问的节点或者最先插入的节点
-        map.remove(key);
-        //尾部是最近访问的或最近插入的节点
-        //调整位置，放置在尾部
-        map.put(key, val);
-        return val;
-    }
-
-    public void put(int key, int value) {
-        if (map.containsKey(key))
-            map.remove(key);
-        //达到容量上限，移除最久未访问的节点，链表的头部节点
-        if (map.size() == limit)
-            map.remove(map.keySet().iterator().next());
-        map.put(key, value);
-    }
-
-    // //构建一个双向链表类;
-    // class Node {
-    //     int key;
-    //     int val;
-    //     //前驱
-    //     Node prev;
-    //     //后继
-    //     Node next;
-
-    //     //Node类构造函数
-    //     public Node(int key, int val) {
-    //         this.key = key;
-    //         this.val = val;
-    //         this.prev = null;
-    //         this.next = null;
-    //     }
-    // }
-
-    // //分别指向头尾两个结点;
-    // Node head;
-    // Node tail;
-
-    // Map<Integer, Node> map;
-    // int cap;
-
-    // //LRUCache类构造函数;
     // public LRUCache(int capacity) {
-    //     this.cap = capacity;
-    //     this.map = new HashMap<>();
+    // limit = capacity;
     // }
 
     // public int get(int key) {
-    //     //cache中不存在当前元素;
-    //     if (map.get(key) == null) {
-    //         return -1;
-    //     }
-
-    //     //存在则将其取出放置到cache头部;
-    //     Node tmp = map.get(key);
-    //     //现在cache中去除该元素;
-    //     removeNode(tmp);
-    //     //然后放置到头部;
-    //     setHead(tmp);
-    //     return tmp.val;
+    // if (!map.containsKey(key))
+    // return -1;
+    // int val = map.get(key);
+    // //取哈希表中key对应位置的链表头部节点，其存放的是最久访问的元素或者最先插入元素
+    // map.remove(key);
+    // //尾部是最近访问的或最近插入的元素
+    // //调整位置，放置在该链表的尾部
+    // map.put(key, val);
+    // return val;
     // }
 
     // public void put(int key, int value) {
-    //     //若cache中存在该元素;
-    //     //则更新其值,并放置到头部;
-    //     if (map.containsKey(key)) {
-    //         Node old = map.get(key);
-    //         //更新值
-    //         old.val = value;
-    //         //先去除该元素;
-    //         removeNode(old);
-    //         //然后放置到头部;
-    //         setHead(old);
-    //     } else {
-    //         //若不存在
-    //         //则将其存入cache,并放置到头部;
-    //         Node created = new Node(key, value);
-    //         //若超过了cache的容量
-    //         //去除LRU的元素,也即双向链表中的尾元素;
-    //         if (map.size() >= cap) {
-    //             //在HashMap中先取出该元素;
-    //             map.remove(tail.key);
-    //             removeNode(tail);
-    //             setHead(created);
-    //         } else {
-    //             //没有超过cache的容量
-    //             //则直接放置到头部;
-    //             setHead(created);
-    //         }
-    //         map.put(key, created);
-    //     }
+    // if (map.containsKey(key))
+    // map.remove(key);
+    // //达到容量上限，移除最久未访问的节点，双向链表的头部节点
+    // if (map.size() == limit)
+    // map.remove(map.keySet().iterator().next());
+    // map.put(key, value);
     // }
 
-    // //从双向链表中去除此结点;
-    // private void removeNode(Node n) {
-    //     //注意去除该节点后的前后结点的连接;
-    //     if (n.prev != null) {
-    //         n.prev.next = n.next;
-    //     } else {
-    //         //表示此时去除的n为头结点;
-    //         //所以要更新头结点;
-    //         head = n.next;
-    //     }
+    // Solution2
+    // 核心思想:
+    // 构造一个双向链表Node类，再利用HashMap将key与每个节点映射
+    // 标记head和tail两个节点，head.next表示最近访问的节点
+    // tail.prev表示最近最久未访问节点
+    private class Node {
+        int key;
+        int val;
+        Node prev;
+        Node next;
 
-    //     if (n.next != null) {
-    //         n.next.prev = n.prev;
-    //     } else {
-    //         tail = n.prev;
-    //     }
-    // }
+        Node(int key, int val) {
+            this.key = key;
+            this.val = val;
+            this.prev = null;
+            this.next = null;
+        }
+    }
 
-    // //将结点放置在链表的头部;
-    // private void setHead(Node n) {
-    //     n.next = head;
-    //     n.prev = null;
-    //     if (head != null) {
-    //         head.prev = n;
-    //     }
-    //     head = n;
-    //     //当链表中只有一个结点时,此时head,tail指向一个结点;
-    //     if (tail == null) {
-    //         tail = head;
-    //     }
-    // }
+    private Node head, tail;
+    private int limit;
+    private Map<Integer, Node> map;
 
+    public LRUCache(int capacity) {
+        limit = capacity;
+        map = new HashMap<>();
+        // 创建head和tail节点
+        head = new Node(0, 0);
+        tail = new Node(-1, -1);
+        // 构建双向链表
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) {
+            return -1;
+        }
+        Node node = map.get(key);
+        // 将key对应的节点从双向链表中删除
+        removeNode(node);
+        // 再将之放到head.next
+        setHead(node);
+        return node.val;
+    }
+
+    public void put(int key, int value) {
+        // 判断是否已存在该key
+        if (map.containsKey(key)) {
+            Node old = map.get(key);
+            removeNode(old);
+            // 更新值
+            old.val = value;
+            // 再放到head.next;
+            setHead(old);
+            return;
+        }
+        // 未存在，再判断容量
+        if (map.size() >= limit) {
+            // 取最近最久未访问元素
+            int tmp = tail.prev.key;
+            // 先从hashmap中去除该元素
+            map.remove(tail.prev.key);
+            // 删除该元素对应的节点
+            removeNode(tail.prev);
+        }
+        // 构建新节点
+        Node node = new Node(key, value);
+        // 放在head.next，最近访问
+        setHead(node);
+        // 更新hashmap
+        map.put(key, node);
+    }
+
+    private void removeNode(Node node) {
+        // 双向链表中只有一个元素，不需要移动到head.next
+        if (node.prev == head && node.next == tail)
+            return;
+
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.prev = null;
+        node.next = null;
+    }
+
+    private void setHead(Node node) {
+        node.next = head.next;
+        node.prev = head;
+        head.next = node;
+        node.next.prev = node;
+    }
 
 }
 /**
- * Your LRUCache object will be instantiated and called as such: 
- * LRUCache obj = new LRUCache(capacity); 
- * int param_1 = obj.get(key); 
- * obj.put(key,value);
+ * Your LRUCache object will be instantiated and called as such: LRUCache obj =
+ * new LRUCache(capacity); int param_1 = obj.get(key); obj.put(key,value);
  */
