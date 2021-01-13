@@ -11,22 +11,20 @@ import javax.swing.tree.TreeNode;
 // @lc code=start
 class Solution {
     // public List<Integer> preorderTraversal(TreeNode root) {
-    // if(root == null)
+    // if (root == null)
     // return new ArrayList<>();
     // List<Integer> res = new ArrayList<>();
     // Stack<TreeNode> st = new Stack<>();
-    // st.push(root);
-    // while (!st.isEmpty()) {
-    // //先遍历根节点
-    // TreeNode cur = st.pop();
-    // res.add(cur.val);
-    // //若右孩子不空，右孩子先进栈
-    // if (cur.right != null)
-    // st.push(cur.right);
-    // //左孩子不空，左孩子进栈
-    // //保证出栈时，左孩子在右孩子前面遍历
-    // if (cur.left != null)
-    // st.push(cur.left);
+    // TreeNode p = root;
+    // while (!st.isEmpty() || p != null) {
+    // if (p != null) {
+    // st.push(p);
+    // res.add(p.val);
+    // p = p.left;
+    // } else {
+    // p = st.pop();
+    // p = p.right;
+    // }
     // }
     // return res;
     // }
