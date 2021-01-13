@@ -21,6 +21,7 @@ class Solution {
             // 则也可以直接遍历cur,然后出栈
             if ((cur.left == null && cur.right == null) || (pre != null && (pre == cur.left || pre == cur.right))) {
                 res.add(cur.val);
+                // 更新pre
                 pre = cur;
                 st.pop();
             } else {// 否则，
