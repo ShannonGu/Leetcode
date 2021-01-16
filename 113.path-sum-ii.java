@@ -3,15 +3,6 @@
  *
  * [113] Path Sum II
  */
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
     // https://www.cnblogs.com/grandyang/p/4042156.html
     private List<List<Integer>> res;
@@ -23,9 +14,9 @@ class Solution {
         helper(root, sum, new ArrayList<>());
         return res;
     }
-    
+
     private void helper(TreeNode root, int sum, List<Integer> out) {
-        if(root == null)
+        if (root == null)
             return;
         out.add(root.val);
         if (sum == root.val && root.left == null && root.right == null) {
@@ -36,4 +27,3 @@ class Solution {
         out.remove(out.size() - 1);
     }
 }
-
