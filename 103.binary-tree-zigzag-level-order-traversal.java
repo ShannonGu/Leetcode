@@ -1,8 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
-import javax.swing.tree.TreeNode;
-
 /*
  * @lc app=leetcode id=103 lang=java
  *
@@ -10,19 +5,10 @@ import javax.swing.tree.TreeNode;
  */
 
 // @lc code=start
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
 class Solution {
     // https://www.cnblogs.com/grandyang/p/4297009.html
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        if(root == null)
+        if (root == null)
             return new ArrayList<>();
         List<List<Integer>> res = new ArrayList<>();
         Queue<TreeNode> q = new LinkedList<>();
@@ -49,4 +35,3 @@ class Solution {
     }
 }
 // @lc code=end
-
