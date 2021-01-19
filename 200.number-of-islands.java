@@ -4,11 +4,12 @@
  * [200] Number of Islands
  */
 class Solution {
-    //Union-Find
+    // Union-Find
     private int[] father;
     private int[][] dires = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+
     public int numIslands(char[][] grid) {
-        if(grid.length == 0 || grid[0].length == 0)
+        if (grid.length == 0 || grid[0].length == 0)
             return 0;
         int m = grid.length, n = grid[0].length;
         father = new int[m * n];
@@ -27,7 +28,6 @@ class Solution {
             }
         }
 
-
         int res = 0;
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
@@ -37,22 +37,27 @@ class Solution {
                 }
             }
         }
-        
+
         return res;
     }
 
     private int find(int x) {
-        if (x == father[x])
-            return x;
-        father[x] = find(father[x]);
-        return father[x];
+        // if (x == father[x])
+        // return x;
+        // father[x] = find(father[x]);
+        // return father[x];
+
+        while (x != father[x]) {
+            father[x] = father[father[x]]; // 路径压缩
+            x = father[x];
+        }
+        return x;
     }
-    
+
     private void unite(int x, int y) {
         x = find(x);
         y = find(y);
-        if(x != y)
+        if (x != y)
             father[x] = y;
     }
 }
-
