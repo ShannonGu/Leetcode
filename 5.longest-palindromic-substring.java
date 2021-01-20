@@ -6,13 +6,13 @@
 class Solution {
     // https://www.cnblogs.com/grandyang/p/4464476.html
     public String longestPalindrome(String s) {
-        if (s.isEmpty())
+        if (s.length() < 2)
             return "";
         int len = s.length();
         // dp[i][j]表示[i, j]是否是回文串
         // dp[i, j] = true , if i == j
-        // = s[i] == s[j] , if i == j + 1
-        // = s[i] == s[j] && dp[i+1][j-1], if i > j + 1
+        // dp[i, j] = s[i] == s[j] , if i == j + 1
+        // dp[i, j] = s[i] == s[j] && dp[i+1][j-1], if i > j + 1
         boolean[][] dp = new boolean[len][len];
         dp[0][0] = true;
         int st = 0, maxLen = 1;
