@@ -4,20 +4,20 @@
  * [5] Longest Palindromic Substring
  */
 class Solution {
-    //https://www.cnblogs.com/grandyang/p/4464476.html
+    // https://www.cnblogs.com/grandyang/p/4464476.html
     public String longestPalindrome(String s) {
-        if(s.isEmpty())
+        if (s.isEmpty())
             return "";
         int len = s.length();
-        //dp[i][j]表示[i, j]是否是回文串
-        //dp[i, j] = true                           if i == j
-        //         = s[i] == s[j]                   if j == i + 1
-        //         = s[i] == s[j] && dp[i+1][j-1]   if j > i + 1
+        // dp[i][j]表示[i, j]是否是回文串
+        // dp[i, j] = true , if i == j
+        // = s[i] == s[j] , if i == j + 1
+        // = s[i] == s[j] && dp[i+1][j-1], if i > j + 1
         boolean[][] dp = new boolean[len][len];
         dp[0][0] = true;
         int st = 0, maxLen = 1;
         for (int i = 0; i < len; ++i) {
-            //i == j;
+            // i == j;
             dp[i][i] = true;
             for (int j = 0; j < i; ++j) {
                 if (i == j + 1)
@@ -34,38 +34,36 @@ class Solution {
     }
 
     // public String longestPalindrome(String s) {
-    //     if (s.length() < 2)
-    //         return s;
-    //     int len = s.length(), maxLen = 0, st = 0;
-    //     for (int i = 0; i < len; ++i) {
-    //         //回文串长度为奇数
-    //         int len1 = searchPalindrome(s, i, i);
-    //         if (len1 > maxLen) {
-    //             maxLen = len1;
-    //             st = i - maxLen / 2;
-    //         }
-    //         //回文串长度为偶数
-    //         int len2 = searchPalindrome(s, i, i + 1);
-    //         if (len2 > maxLen) {
-    //             maxLen = len2;
-    //             st = i - maxLen / 2 + 1;
-    //         }
-    //     }
-    //     return s.substring(st, st + maxLen);
+    // if (s.length() < 2)
+    // return s;
+    // int len = s.length(), maxLen = 0, st = 0;
+    // for (int i = 0; i < len; ++i) {
+    // //回文串长度为奇数
+    // int len1 = searchPalindrome(s, i, i);
+    // if (len1 > maxLen) {
+    // maxLen = len1;
+    // st = i - maxLen / 2;
+    // }
+    // //回文串长度为偶数
+    // int len2 = searchPalindrome(s, i, i + 1);
+    // if (len2 > maxLen) {
+    // maxLen = len2;
+    // st = i - maxLen / 2 + 1;
+    // }
+    // }
+    // return s.substring(st, st + maxLen);
     // }
 
     // //计算回文串长度
     // private int searchPalindrome(String str, int left, int right) {
-    //     while (left >= 0 && right < str.length() && str.charAt(left) == str.charAt(right)) {
-    //         --left;
-    //         ++right;
-    //     }
-    //     return right - left - 1;
+    // while (left >= 0 && right < str.length() && str.charAt(left) ==
+    // str.charAt(right)) {
+    // --left;
+    // ++right;
+    // }
+    // return right - left - 1;
     // }
 
-
-
-    //马拉车算法
-    //https://www.cnblogs.com/grandyang/p/4475985.html
+    // 马拉车算法
+    // https://www.cnblogs.com/grandyang/p/4475985.html
 }
-
