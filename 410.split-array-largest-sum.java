@@ -52,79 +52,79 @@ class Solution {
     // return mem[k][m];
     // }
 
-    public int splitArray(int[] nums, int m) {
-        int n = nums.length;
-        // dp[i][j]表示将前i个数分割成j段所能得到的最大连续子数组和的最小值
-        int[][] dp = new int[n + 1][m + 1];
-        for (int i = 0; i <= n; i++) {
-            Arrays.fill(dp[i], Integer.MAX_VALUE);
-        }
-        int[] sums = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            sums[i + 1] = sums[i] + nums[i];
-        }
+    // public int splitArray(int[] nums, int m) {
+    // int n = nums.length;
+    // // dp[i][j]表示将前i个数分割成j段所能得到的最大连续子数组和的最小值
+    // int[][] dp = new int[n + 1][m + 1];
+    // for (int i = 0; i <= n; i++) {
+    // Arrays.fill(dp[i], Integer.MAX_VALUE);
+    // }
+    // int[] sums = new int[n + 1];
+    // for (int i = 0; i < n; i++) {
+    // sums[i + 1] = sums[i] + nums[i];
+    // }
 
-        dp[0][0] = 0;
-        for (int i = 1; i <= n; i++) {
-            // 最多只能分割成m段
-            for (int j = 1; j <= Math.min(i, m); j++) {
-                // [0, k], [k+1, i];
-                for (int k = 0; k < i; k++) {
-                    // 前k个数分成j-1段，后i-k个数成为1段
-                    dp[i][j] = Math.min(dp[i][j], Math.max(dp[k][j - 1], sums[i] - sums[k]));
-                }
-            }
-        }
-        return dp[n][m];
-    }
+    // dp[0][0] = 0;
+    // for (int i = 1; i <= n; i++) {
+    // // 最多只能分割成m段
+    // for (int j = 1; j <= Math.min(i, m); j++) {
+    // // [0, k], [k+1, i];
+    // for (int k = 0; k < i; k++) {
+    // // 前k个数分成j-1段，后i-k个数成为1段
+    // dp[i][j] = Math.min(dp[i][j], Math.max(dp[k][j - 1], sums[i] - sums[k]));
+    // }
+    // }
+    // }
+    // return dp[n][m];
+    // }
 
     // Binary Search
     // https://www.cnblogs.com/grandyang/p/5933787.html
-    // public int splitArray(int[] nums, int m) {
-    // long l = 0, r = 0;
-    // //所有划分产生的每组和的最大值的最小值
-    // //若m==1,则整个nums数组就是一个子数组
-    // //若m==nums.length,则每个数字就是一个子数组,划分每组和的最大值中的最小值max(nums)
-    // //所以所求在[max(nums), sum(nums) + 1)之间
-    // //我们要尽量缩小这个最小值
-    // for (int i = 0; i < nums.length; ++i) {
-    // l = Math.max(nums[i], l);
-    // r += nums[i];
-    // }
+    public int splitArray(int[] nums, int m) {
+        long l = 0, r = 0;
+        // 所有划分产生的每组和的最大值的最小值
+        // 若m==1,则整个nums数组就是一个子数组
+        // 若m==nums.length,则每个数字就是一个子数组,划分每组和的最大值中的最小值max(nums)
+        // 所以所求在[max(nums), sum(nums) + 1)之间
+        // 我们要尽量缩小这个最小值
+        for (int i = 0; i < nums.length; ++i) {
+            l = Math.max(nums[i], l);
+            r += nums[i];
+        }
 
-    // while (l < r) {
-    // //mid作为每个划分中每组和的上界
-    // long mid = l + ((r - l) >> 1);
-    // //判断是否可以划分出以mid为上界的<=m组
-    // //如果可以，继续尝试减小上界,使组的个数逼近m;
-    // if (canSplit(nums, m, mid))
-    // r = mid;
-    // else
-    // //否则，说明这个上界太小了，导致划分的组数>m了
-    // l = mid + 1;
-    // }
-    // return (int) l;
-    // }
+        while (l < r) {
+            // mid作为每个划分中每组和的上界
+            long mid = l + ((r - l) >> 1);
+            // 判断是否可以划分出以mid为上界的<=m组
+            // 如果可以，继续尝试减小上界,使组的个数逼近m;
+            if (canSplit(nums, m, mid))
+                r = mid;
+            else
+                // 否则，说明这个上界太小了，导致划分的组数>m了
+                l = mid + 1;
+        }
+        return (int) l;
+    }
 
-    // private boolean canSplit(int[] nums, int m, long sum) {
-    // //sum为每个组的和的上界
-    // //cnt为组的个数
-    // int cnt = 1, curSum = 0;
-    // for (int i = 0; i < nums.length; ++i) {
-    // curSum += nums[i];
+    private boolean canSplit(int[] nums, int m, long sum) {
+        // sum为每个组的和的上界
+        // cnt为组的个数
+        int cnt = 1, curSum = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            curSum += nums[i];
 
-    // //当前组的和大于sum
-    // if (curSum > sum) {
-    // //重新开始划分一个新组
-    // curSum = nums[i];
-    // //组的个数加1;
-    // ++cnt;
-    // //大于m则不能使用sum作为上界
-    // if (cnt > m)
-    // return false;
-    // }
-    // }
-    // //否则可以划分成m组以内，使得每个组的和均<=sum;
-    // return true;
-    // }
+            // 当前组的和大于sum
+            if (curSum > sum) {
+                // 重新开始划分一个新组
+                curSum = nums[i];
+                // 组的个数加1;
+                ++cnt;
+                // 大于m则不能使用sum作为上界
+                if (cnt > m)
+                    return false;
+            }
+        }
+        // 否则可以划分成m组以内，使得每个组的和均<=sum;
+        return true;
+    }
 }
