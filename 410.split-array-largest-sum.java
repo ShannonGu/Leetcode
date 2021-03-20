@@ -94,7 +94,8 @@ class Solution {
 
         while (l < r) {
             // mid作为每个划分中每组和的上界
-            long mid = l + ((r - l) >> 1);
+            // 分为[l, mid]和[mid + 1, r]
+            long mid = l + r >> 1;
             // 判断是否可以划分出以mid为上界的<=m组
             // 如果可以，继续尝试减小上界,使组的个数逼近m;
             if (canSplit(nums, m, mid))
@@ -120,6 +121,7 @@ class Solution {
                 // 组的个数加1;
                 ++cnt;
                 // 大于m则不能使用sum作为上界
+                // 分割的数组太多了
                 if (cnt > m)
                     return false;
             }
