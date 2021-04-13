@@ -8,7 +8,7 @@ class Solution {
     public int subarraysDivByK(int[] A, int K) {
         // 将前缀和sum mod K和该余数出现的次数映射起来
         Map<Integer, Integer> m = new HashMap<>();
-        // 初始化，防止后面出现余数为0的情况
+        // 初始化，考虑前缀和本身被K整除的情况
         m.put(0, 1);
         int sum = 0, res = 0;
         for (int i = 0; i < A.length; ++i) {
